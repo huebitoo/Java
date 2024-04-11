@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Ejercicio{
 	public static void main(String[] args){
-		Expendedor exp = new Expendedor(4,300);
+		Expendedor exp = new Expendedor(4,200);
 		Moneda m = null;
 		Comprador c=null;
 		m = new Moneda1000();
@@ -39,11 +39,13 @@ class Expendedor{
 	private DepositoM monVu;
 	public static final int  COCA=1;
 	public static final int  SPRITE=2;
+	public int precio;
 
 	public Expendedor(int numBebidas, int precioBebidas){
 		coca = new Deposito();
 		sprite = new Deposito();
 		monVu = new DepositoM();
+		this.precio = precioBebidas;
 
 		for (int i = 0; i < numBebidas; i++){
 			coca.addBebida(new CocaCola(100 + i));
@@ -55,7 +57,7 @@ class Expendedor{
 		if(m != null){
 			monVu.addMoneda(m);
 			if(cual == COCA){
-				if(m.getValor() >= 300){
+				if(m.getValor() >= precio){
 					Bebida b = coca.getBebida();
 					return b;
 				} else {
@@ -65,7 +67,7 @@ class Expendedor{
 				
 			}
 			else if (cual == SPRITE){
-				if(m.getValor() >= 300){
+				if(m.getValor() >= precio){
 					Bebida b = sprite.getBebida();
 					return b;
 				} else {
@@ -104,7 +106,7 @@ class Comprador{
 			while(true){
 				Moneda a = exp.getVuelto();
 				if(a == null){
-					this.vuelto -= 300;
+					this.vuelto -= exp.precio;
 					break;
 				} else {
 					this.vuelto += a.getValor();	
