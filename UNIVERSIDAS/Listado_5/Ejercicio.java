@@ -2,34 +2,29 @@ import java.util.ArrayList;
 
 public class Ejercicio{
 	public static void main(String[] args){
-		Expendedor exp = new Expendedor(4,200);
+		Expendedor exp = new Expendedor(3,1000);
 		Moneda m = null;
 		Comprador c=null;
-		m = new Moneda1000();
-		c = new Comprador(m,Expendedor.COCA,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
-		m = new Moneda1000();
-		c = new Comprador(m,Expendedor.COCA,exp);
-		System.out.println(c.queBebiste()+", " +c.cuantoVuelto());
-		m = new Moneda1000();
-		c = new Comprador(m,Expendedor.COCA,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
-		m = new Moneda1000();
-		c = new Comprador(m,Expendedor.COCA,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
 
-		m = new Moneda500();
+		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
-		m = new Moneda500();
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
-		m = new Moneda500();
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
-		m = new Moneda500();
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+
+		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
-		System.out.println(c.queBebiste()+", "+ c.cuantoVuelto());
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+		m = new Moneda1500();
+		c = new Comprador(m,Expendedor.SPRITE,exp);
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+		m = new Moneda1500();
+		c = new Comprador(m,Expendedor.SPRITE,exp);
+		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
 	}
 }
 
@@ -37,6 +32,7 @@ class Expendedor{
 	private Deposito coca; 
 	private Deposito sprite;
 	private DepositoM monVu;
+
 	public static final int  COCA=1;
 	public static final int  SPRITE=2;
 	public int precio;
@@ -55,12 +51,19 @@ class Expendedor{
 
 	public Bebida comprarBebida(Moneda m, int cual){
 		if(m != null){
-			monVu.addMoneda(m);
 			if(cual == COCA){
 				if(m.getValor() >= precio){
 					Bebida b = coca.getBebida();
+					if (b == null){
+						monVu.addMoneda(m);
+						return null;
+					}
+					for(int i = 0; i < (m.getValor()-precio)/100; i++){
+						monVu.addMoneda(new Moneda100());
+					}
 					return b;
 				} else {
+					monVu.addMoneda(m);
 					Bebida b = null;
 					return b;
 				}
@@ -69,13 +72,24 @@ class Expendedor{
 			else if (cual == SPRITE){
 				if(m.getValor() >= precio){
 					Bebida b = sprite.getBebida();
+					if (b == null){
+						monVu.addMoneda(m);
+						return null;
+					}
+					System.out.println(m.getValor());
+					for(int i = 0; i < (m.getValor()-precio)/100; i++){
+						monVu.addMoneda(new Moneda100());
+					}
 					return b;
 				} else {
+					monVu.addMoneda(m);
 					Bebida b = null;
 					return b;
 				}
+				
 			}
 			else {
+				monVu.addMoneda(m);
 				Bebida b = null;
 				return b;
 			}
@@ -87,7 +101,13 @@ class Expendedor{
 	}
 
 	public Moneda getVuelto(){
-		return monVu.getMoneda();
+		Moneda m = monVu.getMoneda();
+		if (m == null){
+			return null;
+		}
+		else{
+			return m;
+		}
 	}
 }
 
@@ -99,14 +119,19 @@ class Comprador{
 		Bebida b = exp.comprarBebida(m, cualBebida);
 		
 		if(b == null){
+			Moneda m1= exp.getVuelto();
+			if(m1 == null){
+				vuelto = 0;
+			} else {
+				vuelto = m1.getValor();
+			}
 			sonido = null;
-			vuelto = exp.getVuelto().getValor();
 		} else {
 			this.sonido = b.beber();
 			while(true){
 				Moneda a = exp.getVuelto();
 				if(a == null){
-					this.vuelto -= exp.precio;
+					// this.vuelto -= exp.precio;
 					break;
 				} else {
 					this.vuelto += a.getValor();	
