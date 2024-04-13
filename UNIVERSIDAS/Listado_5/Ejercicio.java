@@ -5,7 +5,7 @@ public class Ejercicio{
 		Expendedor exp = new Expendedor(3,1000);
 		Moneda m = null;
 		Comprador c=null;
-
+		// Funciono correctamente
 		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
 		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
@@ -25,6 +25,7 @@ public class Ejercicio{
 		m = new Moneda1500();
 		c = new Comprador(m,Expendedor.SPRITE,exp);
 		System.out.println(c.queBebiste()+", " + c.cuantoVuelto());
+		System.out.println("genial bro;");
 	}
 }
 
@@ -159,7 +160,6 @@ abstract class Moneda{
     public abstract int getValor();
 }
 
-
 abstract class Bebida{
 	private int serie;
 
@@ -228,7 +228,6 @@ class Sprite extends Bebida{
 		return "sprite";
 	}
 }
-
 
 class Moneda1500 extends Moneda{
 	public Moneda1500(){
