@@ -16,7 +16,7 @@ public class Main {
 
         // Creacion del panel
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        // panel.setLayout(new FlowLayout());
         panel.setBackground(Color.yellow);
 
         // Creacion del font para las letras
@@ -28,13 +28,19 @@ public class Main {
 
         // Carga de la imagen
         ImageIcon icon = new ImageIcon("./images.png");
+        frame.setIconImage(icon.getImage());
         JLabel imagen = new JLabel(icon);
 
         // Botones
         JButton boton1 = new JButton("", icon);
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Papu papu contesta la videollamada :) :v");
+            }
+        });
 
-
-
+        // Agregar los componentes al panel
         panel.add(boton1);
         panel.add(imagen);
         panel.add(label);
